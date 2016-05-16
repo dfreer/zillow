@@ -15,15 +15,11 @@ Add ``dfreer/zillow`` as a require dependency in your ``composer.json`` file:
 Usage
 -----
 
-.. code-block:: php
-
     use Zillow\ZillowClient;
 
     $client = new ZillowClient('ZWSID');
 
 Make requests with a specific API call method:
-
-.. code-block:: php
 
     // Run GetSearchResults
     $response = $client->GetSearchResults(['address' => '5400 Tujunga Ave', 'citystatezip' => 'North Hollywood, CA 91601']);
