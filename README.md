@@ -3,22 +3,14 @@ Zillow, PHP Wrapper
 
 This is a simple PHP Wrapper for the Zillow API services.
 
-.. image:: https://travis-ci.org/VinceG/zillow.svg?branch=master
-    :target: https://travis-ci.org/VinceG/zillow
-
-Requirements
-------------
-
-depends on PHP 5.4+, Goutte 2.0+, Guzzle 4+.
-
 Installation
 ------------
 
-Add `VinceG/zillow`` as a require dependency in your ``composer.json`` file:
+Add ``dfreer/zillow`` as a require dependency in your ``composer.json`` file:
 
 .. code-block:: bash
 
-    php composer.phar require vinceg/zillow:~1.0
+    php composer.phar require dfreer/zillow:~1.0
 
 Usage
 -----
