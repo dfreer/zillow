@@ -5,6 +5,7 @@
     "keywords": ["zillow", "php", "api"],
     "homepage": "https://github.com/vinceg/zillow",
     "license": "MIT",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Vincent Gabriel",
