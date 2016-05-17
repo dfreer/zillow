@@ -27,21 +27,21 @@ class ZillowClient
      * @var zillow api endpoint
      */
     const END_POINT = 'http://www.zillow.com/webservice/';
-	/**
-	 * @var object GuzzleClient
-	 */
-	protected $client;
+    /**
+     * @var object GuzzleClient
+     */
+    protected $client;
 
-	/**
-	 * @var string ZWSID
-	 */
-	protected $ZWSID;
+    /**
+     * @var string ZWSID
+     */
+    protected $ZWSID;
 
-	/**
+    /**
      * @var int
      */
     protected $errorCode = 0;
-	
+    
     /**
      * @var string
      */
@@ -101,8 +101,8 @@ class ZillowClient
         $this->setZWSID($ZWSID);
     }
 
-	/**
-	 * Set client
+    /**
+     * Set client
      * return GuzzleClient
      */
     public function setClient(GuzzleClientInterface $client)
@@ -130,7 +130,7 @@ class ZillowClient
      */
     public function setZWSID($id)
     {
-    	return ($this->ZWSID = $id);
+        return ($this->ZWSID = $id);
     }
 
     /**
@@ -138,7 +138,7 @@ class ZillowClient
      */
     public function getZWSID()
     {
-    	return $this->ZWSID;
+        return $this->ZWSID;
     }
 
     /**
@@ -147,7 +147,7 @@ class ZillowClient
      */
     public function isSuccessful()
     {
-    	return (bool) ((int) $this->errorCode === 0);
+        return (bool) ((int) $this->errorCode === 0);
     }
 
     /**
@@ -156,7 +156,7 @@ class ZillowClient
      */
     public function getStatusCode()
     {
-    	return $this->errorCode;
+        return $this->errorCode;
     }
 
     /**
@@ -165,7 +165,7 @@ class ZillowClient
      */
     public function getStatusMessage()
     {
-    	return $this->errorMessage;
+        return $this->errorMessage;
     }
 
     /**
@@ -264,15 +264,15 @@ class ZillowClient
      * @return array
      */
     protected function doRequest($call, array $params) {
-    	// Validate
-    	if(!$this->getZWSID()) {
-    		throw new ZillowException("You must submit the ZWSID");
-    	}
+        // Validate
+        if(!$this->getZWSID()) {
+            throw new ZillowException("You must submit the ZWSID");
+        }
 
-    	// Run the call
-    	$response = $this->getClient()->get(self::END_POINT.$call.'.htm', ['query' => ['zws-id' => $this->getZWSID()] + $params]);
-
-        $this->response = $response->xml();
+        // Run the call
+        $params = $params[0];
+        $params['zws-id'] = $this->getZWSID();
+        $this->response = $this->getClient()->get(self::END_POINT.$call.'.htm', ['query' => $params]);
 
         // Parse response
         return $this->parseResponse($this->response);
@@ -286,10 +286,21 @@ class ZillowClient
      */
     protected function parseResponse($response)
     {
-        // Init
-        $this->response = json_decode(json_encode($response), true);
+        // echo $response->getStatusCode(); // 200
+        // echo $response->getReasonPhrase(); // OK
+        // echo $response->getProtocolVersion(); // 1.1
+        if($response->getStatusCode()!=200)
+        {
+            // throw exception??
+        }
 
-        if(!$this->response['message']) {
+        $xml = (string) $response->getBody();
+        $xml = simplexml_load_string($xml);
+        $json = json_encode($xml);
+        $this->response = json_decode($json,TRUE);
+
+        if( ! isset($this->response['message']))
+        {
             $this->setStatus(999, 'XML WAS NOT FOUND');
             return;
         }
