@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 
 class ZillowServiceProvider extends ServiceProvider
 {
+    protected $defer = true;
+
     public function boot() {}
 
     public function register()
