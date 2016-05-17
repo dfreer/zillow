@@ -1,12 +1,13 @@
 {
     "name": "dfreer/zillow",
-    "type": "application",
-    "description": "Zillow PHP API Wrapper",
+    "description": "Laravel 5 Zillow api wrapper. This code is a fork from vinceg/zillow",
     "keywords": ["zillow", "php", "api"],
-    "homepage": "https://github.com/vinceg/zillow",
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
+        {
+            "name": "Derek Freer",
+            "email": "derek.freer@kalidy.com"
+        },
         {
             "name": "Vincent Gabriel",
             "email": "vadimg88@gmail.com"
@@ -17,8 +18,10 @@
         "guzzlehttp/guzzle": "5.3|~6.0",
         "fabpot/goutte": "^3.1"
     },
-    "require-dev": {
-        "phpunit/phpunit": "4.*"
+    "autoload": {
+        "classmap": [
+            "src/commands"
+        ]
     },
     "autoload": {
         "psr-4": {
